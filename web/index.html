@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gaussian Splatting Tour – Spark</title>
+    <style>
+      body, html { margin: 0; padding: 0; overflow: hidden; }
+      canvas { display: block; }
+    </style>
+
+    <!-- importmap из официального Quick Start Spark -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.178.0/three.module.js",
+          "@sparkjsdev/spark": "https://sparkjs.dev/releases/spark/0.1.10/spark.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- наш код будет в отдельном модуле -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

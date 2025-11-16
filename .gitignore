@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+venv/
+.venv/
+
+# VS Code
+.vscode/
+.env
+
+# Spark and bundlers
+node_modules/
+dist/
+build/
+
+# Large PLY files (оставь если нужно)
+*.spz
+*.splat
+*.ksplat
+*.ply
+
+# System
+.DS_Store
