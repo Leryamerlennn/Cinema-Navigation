@@ -20,11 +20,11 @@ const PATH_FPS = 15;
 
 // How many complete passes through the camera path should be recorded.  The
 // specification calls for exactly two revolutions.
-const LOOPS_TO_RECORD = 5;
+const LOOPS_TO_RECORD = 1;
 
 // File names for the PLY model and camera path.  These are relative to the
 // HTML file that includes this script.
-const PLY_FILE = "./ConferenceHall.ply";
+const PLY_FILE = "./Theater.ply";
 const CAMERA_PATH_FILE = "./camera_path.json";
 
 // ========================
