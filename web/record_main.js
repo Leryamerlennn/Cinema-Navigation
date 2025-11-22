@@ -159,7 +159,8 @@ function startRecorder() {
       recordedChunks.push(event.data);
     }
   };
-    recorder.onstop = () => {
+
+  recorder.onstop = () => {
     const blob = new Blob(recordedChunks, { type: "video/webm" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
