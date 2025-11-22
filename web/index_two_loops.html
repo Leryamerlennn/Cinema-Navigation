@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gaussian Splatting 360 Recorder – Two Loops</title>
+
+    <!--
+      This page drives a simple 360° tour of a Gaussian Splatting scene and
+      captures a video of the tour.  It relies on camera poses stored in
+      camera_path.json and a PLY file containing the splat data.  The
+      accompanying script (two_loop_record.js) will automatically walk the
+      camera along the path twice and stop recording when two complete
+      revolutions have been captured.  The resulting video is automatically
+      downloaded as a WebM file.
+    -->
+
+    <style>
+      /* Stretch the canvas to fill the entire viewport */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+      }
+
+      canvas {
+        display: block;
+      }
+    </style>
+
+    <!-- importmap referencing three.js and Spark's modules -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.178.0/three.module.js",
+          "@sparkjsdev/spark": "https://sparkjs.dev/releases/spark/0.1.10/spark.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- The application logic lives in a separate ES module. -->
+    <script type="module" src="./two_loop_record.js"></script>
+  </body>
+</html>
