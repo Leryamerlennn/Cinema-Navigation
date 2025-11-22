@@ -1,4 +1,3 @@
-<!-- web/index_record.html -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -29,7 +28,7 @@
             width: 100%;
             height: 100%;
             display: block;
-            image-rendering: pixelated; /* чтобы растянутый half-res выглядел нормально */
+            image-rendering: pixelated;
         }
 
         button {
@@ -38,6 +37,16 @@
             cursor: pointer;
         }
     </style>
+
+    <!-- importmap как в index.html -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.178.0/three.module.js",
+          "@sparkjsdev/spark": "https://sparkjs.dev/releases/spark/0.1.10/spark.module.js"
+        }
+      }
+    </script>
 </head>
 <body>
     <div id="controls">
@@ -51,7 +60,6 @@
     <script type="module">
         import { startRender } from "./record_main.js";
 
-        // Пути к файлам PLY и camera_path.json
         const PLY_PATH = "./ConferenceHall.ply";
         const CAMERA_PATH = "./camera_path.json";
 
