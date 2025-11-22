@@ -1,0 +1,68 @@
+<!-- web/index_render_frames.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Offline рендер кадров (Spark + PLY)</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #controls {
+            padding: 8px 12px;
+            background: #111;
+            color: #eee;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 14px;
+        }
+
+        #renderCanvas {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            display: block;
+            image-rendering: pixelated; /* растягиваем low-res без сглаживания */
+        }
+
+        button {
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <button id="startBtn">Рендерить кадры</button>
+        <span style="margin-left: 12px;">
+            1) Открой страницу и подожди, пока помещение подгрузится.
+            2) Нажми «Рендерить кадры» — PNG начнут скачиваться.
+        </span>
+    </div>
+    <canvas id="renderCanvas"></canvas>
+
+    <script type="module">
+        import { startRenderFrames } from "./render_frames.js";
+
+        // Пути к файлам (подправь при необходимости)
+        const PLY_PATH = "./ConferenceHall.ply";
+        const CAMERA_PATH = "./camera_path.json";
+
+        document.getElementById("startBtn").addEventListener("click", () => {
+            startRenderFrames(PLY_PATH, CAMERA_PATH)
+                .catch((err) => {
+                    console.error(err);
+                    alert("Ошибка при рендере: " + err.message);
+                });
+        });
+    </script>
+</body>
+</html>
