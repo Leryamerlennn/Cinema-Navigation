@@ -62,27 +62,22 @@ def generate_center_360_path(
       radius_factor — доля размера сцены по XZ, определяющая радиус окружности.
       fov           — поле зрения камеры в градусах.
     """
-    # 1. Читаем PLY через настроенный загрузчик
     xs, ys, zs = load_ply_xyz(ply_path)
 
-    # 2. Центр и размер сцены
     _bounds, center, size = compute_bounds(xs, ys, zs)
 
-    # 3. Радиус для кругового движения камеры
     base_radius = max(size[0], size[2])
     if base_radius <= 0:
         raise ValueError("Нулевой размер сцены по XZ — проверьте PLY")
 
     radius = base_radius * radius_factor
 
-    # На случай очень маленькой сцены — минимальный радиус
     scene_diag = float(np.linalg.norm(size))
     if radius < scene_diag * 1e-3:
         radius = scene_diag * 1e-3
 
     center = center.astype(float)
 
-    # 4. Рассчитываем итоговое количество кадров и шаг по углу
     loops = max(1, int(loops))
     slow_factor = max(0.1, float(slow_factor))
     frames_per_loop = max(1, int(frames_per_loop))
@@ -93,15 +88,12 @@ def generate_center_360_path(
 
     frames = []
 
-    # Полный угол для всех оборотов
     total_angle = 2.0 * np.pi * loops
 
     for i in range(total_frames):
-        # Угол в радианах от 0 до total_angle
         t = i / float(total_frames)
         angle = total_angle * t
 
-        # Смещение камеры в плоскости XZ (высоту оставляем как у центра)
         offset = np.array(
             [
                 np.cos(angle) * radius,
@@ -111,9 +103,8 @@ def generate_center_360_path(
             dtype=float,
         )
         camera_pos = center + offset
-        target = center  # смотрим в геометрический центр
+        target = center  
 
-        # Матрица camera_to_world в формате Three.js
         M = look_at_three(camera_pos, target)
 
         frames.append(
@@ -123,7 +114,6 @@ def generate_center_360_path(
             }
         )
 
-    # 5. Куда сохранять camera_path.json
     if out_path is None:
         base_dir = os.path.dirname(os.path.abspath(ply_path))
         out_path = os.path.join(base_dir, "camera_path.json")

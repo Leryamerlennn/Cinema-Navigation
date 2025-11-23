@@ -2,8 +2,7 @@ import numpy as np
 from plyfile import PlyData
 
 def unpack_xyz(packed):
-    # packed_position: 10 bits per axis
-    mask = (1 << 10) - 1  # 0x3FF = 1023
+    mask = (1 << 10) - 1  
     x =  packed        & mask
     y = (packed >> 10) & mask
     z = (packed >> 20) & mask
@@ -17,18 +16,15 @@ def load_supersplat_positions(ply_path):
     chunks = ply["chunk"].data
     verts  = ply["vertex"].data
 
-    # Список позиций всех сплатов в мировых координатах
     world_xyz = []
 
     chunk_count = len(chunks)
-    chunk_size  = len(verts) // chunk_count  # примерно равные группы
+    chunk_size  = len(verts) // chunk_count  
 
     for i, c in enumerate(chunks):
-        # границы чанка
         min_xyz = np.array([c["min_x"], c["min_y"], c["min_z"]])
         max_xyz = np.array([c["max_x"], c["max_y"], c["max_z"]])
 
-        # какие вершины принадлежат этому чанку
         start = i * chunk_size
         end   = (i + 1) * chunk_size if i < chunk_count - 1 else len(verts)
 

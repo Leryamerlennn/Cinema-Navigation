@@ -1,4 +1,4 @@
-# Cinema Navigation: 360° Scene Flythrough, Video Recording and Object Detection
+# Cinema Navigation: Scene Rendering, 360° Coverage & Object Detection
 
 This project implements a full pipeline for **cinematic navigation through a 3D scene** represented as a Supersplat / Gaussian Splatting PLY file:
 
@@ -24,24 +24,24 @@ Key directories and files:
 
 - `src/`
   - `center_360_path.py` – Generates a 360° camera path around the scene center.
-  - `explorer.py` – Reads custom Supersplat/Gaussian PLY and computes scene bounds.
+  - `explorer.py` – Reads custom Gaussian PLY and computes scene bounds.
   - `supersplat_reader.py` – Low-level parser for packed Supersplat positions.
   - `path_planner.py` – Camera math: `look_at_three`, creation of `camera_to_world` matrices and path serialization.
   - `waypoints.py` – Generates grid-based waypoints (used for more advanced navigation scenarios).
   - `main.py` – Example entry point for scene analysis and path generation (can be adapted as needed).
 
+- `videos/`
+  - Folder with all 4 scenes with 360-degree shooting and yolo detection
+
 - `web/`
-  - `ConferenceHall.ply` – Scene model (Supersplat / Gaussian Splatting PLY).
+  - `ConferenceHall.ply` – Scene models .
   - `camera_path.json` – Auto-generated camera path file.
-  - `index_fast_360.html` – Fast 360° viewer (no recording).
-  - `fast_360_viewer.js` – Logic for loading PLY with Spark and playing back the camera path.
-  - `index_record.html` – UI for recording a 360° video.
-  - `record_main.js` – Renders the scene along the camera path and records a WebM video, with warmup frames and a 60-second delay before recording.
+  - `index_two_loops.html` – Fast 360° viewer (Two circles around itself for greater clarity).
+  - `two_loop_record.js` – Renders the scene along the camera path and records a WebM video, with warmup frames and a 60-second delay before recording.
 
 - Repository root:
   - `yolo_detect_video.py` – YOLO-based object detection on the recorded video.
   - `requirements.txt` – Python dependencies.
-  - `.gitignore` – Ignores artifacts (caches, videos, camera_path.json, large PLYs, etc.).
 
 ---
 
@@ -61,7 +61,7 @@ pip install -r requirements.txt
 
 This script:
 
-- Reads a Supersplat/Gaussian PLY file (e.g. `ConferenceHall.ply`) via `explorer.load_ply_xyz` (which understands the custom packed format).
+- Reads a Gaussian PLY file (e.g. `ConferenceHall.ply`) via `explorer.load_ply_xyz` (which understands the custom packed format).
 - Computes:
   - Scene bounding box,
   - Center and extents.
@@ -85,7 +85,7 @@ python src/center_360_path.py web/ConferenceHall.ply
 
 Default behavior:
 
-- Full revolution = 360 frames.
+- Full revolution = 360 frames two times.
 - Radius ≈ 5% of the scene size in the XZ plane.
 - Camera height equal to the scene center height.
 
@@ -121,14 +121,18 @@ http://localhost:8000
 
 ---
 
+In the browser, you must open `index_two_loop.html` to view the 360-degree render.
+
 ### 2.3. Recording a 360° Video (WebM)
 
 Files:
 
-- `web/index_record.html` – simple UI with a “Start render” button.
-- `web/record_main.js` – rendering and recording logic.
+- `web/index_two_loops.html` – simple UI with a “Start render” button.
+- `web/two_loop_record.js` – rendering and recording logic.
 
-`record_main.js` flow:
+- For recoding you need add path to file like `PLY_FILE = "./Theater.ply"`
+
+`two_loop_record.js` flow:
 
 1. Creates a `THREE.Scene`, a `PerspectiveCamera`, and a `WebGLRenderer`:
    - Renders at half resolution (width/2, height/2).
@@ -161,7 +165,7 @@ Usage:
 3. Open:
 
    ```text
-   http://localhost:8080/index_record.html
+   http://localhost:8080/index_two_loops.html
    ```
 
 4. Wait for the scene to appear.
@@ -272,7 +276,7 @@ Useful options:
    - Open:
 
      ```text
-     http://localhost:8080/index_record.html
+     http://localhost:8080/index_two_loops.html
      ```
 
    - Click `Start render` (warmup + 60-second delay + recording).
@@ -310,7 +314,7 @@ Useful options:
 - `camera_to_world` – a 4×4 matrix in Three.js format (`Matrix4.fromArray`), mapping camera space to world space.
 - `fov` – camera field of view in degrees (optional, but supported by the viewers).
 
-Both `record_main.js` and `fast_360_viewer.js`:
+Both `two_loop_record.js` and `fast_360_viewer.js`:
 
 - Read each entry in sequence,
 - Build a `THREE.Matrix4` from `camera_to_world`,
@@ -345,7 +349,7 @@ To use a different PLY scene:
      const CAMERA_PATH = "./camera_path.json";
      ```
 
-   - `index_record.html`:
+   - `index_two_loops.html`:
 
      ```js
      const PLY_PATH = "./MyScene.ply";

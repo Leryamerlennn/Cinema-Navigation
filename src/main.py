@@ -9,7 +9,6 @@ import numpy as np
 
 def main():
 
-    # ---------- 1. Анализ модели ----------
     info = analyze_scene("web/ConferenceHall.ply")
 
 
@@ -20,13 +19,11 @@ def main():
     print("Scene center:", center)
     print("Scene size:", size)
 
-    # ---------- 2. Строим вокселизацию ----------
     occupied = voxelize(xs, ys, zs, voxel_size=0.5)
     print("Voxels occupied:", len(occupied))
 
-    # ---------- 3. ВЫБЕРИ ОДИН ИЗ РЕЖИМОВ ----------
 
-    MODE = "SAFE"        # "PANORAMA" or "SAFE"
+    MODE = "SAFE"        
 
     if MODE == "PANORAMA":
         frames = generate_panorama_path(
@@ -49,7 +46,6 @@ def main():
         )
         print("Generated SAFE A* path.")
 
-    # ---------- 4. Сохраняем ----------
     save_path(frames, "web/camera_path.json")
 
 

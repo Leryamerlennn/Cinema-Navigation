@@ -25,7 +25,6 @@ def look_at_three(camera_pos, target, up=np.array([0, 1, 0])):
     return M
 
 
-# ------------------ A* ------------------
 
 
 def astar(start, goal, occupied):
@@ -68,7 +67,6 @@ def astar(start, goal, occupied):
     return None
 
 
-# ------------------ TRAJECTORIES ------------------
 
 def generate_panorama_path(n_frames=900, fov=60, radius=4.0, height=1.6, center=np.array([0,0,0])):
     frames = []
