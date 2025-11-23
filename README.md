@@ -1,6 +1,6 @@
 # Cinema Navigation: Scene Rendering, 360° Coverage & Object Detection
 
-This project implements a full pipeline for **cinematic navigation through a 3D scene** represented as a Supersplat / Gaussian Splatting PLY file:
+This project implements a full pipeline for **cinematic navigation through a 3D scene** represented as a Gaussian Splatting PLY file:
 
 1. A **Python pipeline** analyzes the PLY scene and generates a smooth 360° camera path around the scene center.
 2. A **web client using Three.js + Spark** loads the PLY, plays back the camera path, and **records a 360 video** (WebM).
