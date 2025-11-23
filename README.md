@@ -34,7 +34,6 @@ Key directories and files:
   - Folder with all 4 scenes with 360-degree shooting and yolo detection
 
 - `web/`
-  - `ConferenceHall.ply` – Scene models .
   - `camera_path.json` – Auto-generated camera path file.
   - `index_two_loops.html` – Fast 360° viewer (Two circles around itself for greater clarity).
   - `two_loop_record.js` – Renders the scene along the camera path and records a WebM video, with warmup frames and a 60-second delay before recording.
@@ -78,6 +77,8 @@ This script:
 - Saves them into `web/camera_path.json`.
 
 Example run from the repository root:
+
+add .PLY file into folder `web`
 
 ```bash
 python src/center_360_path.py web/ConferenceHall.ply
